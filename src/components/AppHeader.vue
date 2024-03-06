@@ -4,12 +4,22 @@ import {store} from '../store';
 
 export default {
     name: 'AppHeader',
+    userRequestInput: '',
 
     data() {
         return {
             store,
         }
     },
+
+    methods: {
+
+        SearchingString() {
+            this.store.searchedText = this.userRequestInput;
+        }
+
+    },
+
 }
 </script>
 
@@ -17,7 +27,8 @@ export default {
 
     <header>
         <div class="container">
-            Header Boolflix
+            <input name="filter" type="search" v-model="userRequestInput" placeholder="Cerca il tuo film">
+            <button @click="() => { SearchingString(); $emit('creatingCards') }">Cerca</button>
         </div>
     </header>
     
