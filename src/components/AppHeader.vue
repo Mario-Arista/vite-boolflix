@@ -3,7 +3,7 @@
 import {store} from '../store';
 
 export default {
-    name: AppHeader,
+    name: 'AppHeader',
 
     data() {
         return {
@@ -14,8 +14,11 @@ export default {
 </script>
 
 <template>
+
     <header>
-        <div class="container">Barra di navigazione</div>
+        <div class="container">
+            Header Boolflix
+        </div>
     </header>
     
 </template>
@@ -25,6 +28,13 @@ export default {
 header {
     width: 100%;
     background: black;
+
+    .container {
+
+        color: white;
+        padding: 20px 0px;
+
+    }
 
 }
 

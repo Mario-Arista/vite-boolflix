@@ -5,8 +5,17 @@
 
 
 }
+// Reset rules
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// Common rules
+
 .container {
   margin: 0 auto;
   max-width: 1200px;
-  color: white;
 }

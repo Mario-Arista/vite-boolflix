@@ -24,8 +24,10 @@ export default {
 
 <template>
 
-    <AppHeader></AppHeader>
-    <AppMain></AppMain>
+
+  <AppHeader></AppHeader>
+  <AppMain></AppMain>
+
 
 </template>
 
