@@ -26,10 +26,10 @@ export default {
                 v-for="movie in store.movies"
             >
 
-                <div class="original-title">{{ movie.original_title }}</div>
-                <div class="non-original-title">{{ movie.title }}</div>
-                <div class="original-language">{{ movie.original_language }}</div>
-                <div class="vote-avarage">{{ movie.vote_average.toFixed(1) }}</div>
+                <div class="original-title"><strong>Titolo originale:</strong> <span>{{ movie.original_title }}</span></div>
+                <div class="non-original-title"><strong>Titolo:</strong> <span>{{ movie.title }}</span></div>
+                <div class="original-language"><strong>Lingue originale:</strong> <span>{{ movie.original_language }}</span></div>
+                <div class="vote-avarage"><strong>Rating:</strong> <span>{{ movie.vote_average.toFixed(2) }}</span></div>
 
             </div>
 
@@ -48,18 +48,22 @@ export default {
     gap: $cardOrizontalGap;
     margin-bottom: 30px;
 
-    // Test
-    border: 1px dashed greenyellow;
-
     .movie {
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
+        gap: 10px;
+        padding-left: 5px;
 
         background-color: transparent;
         width: calc(100% / 5 - $cardOrizontalGap / 5 * 4);
 
         // Test
         border: 1px dashed black;
+
+        strong {
+            color: $primary_color;
+        }
     }
 
 }

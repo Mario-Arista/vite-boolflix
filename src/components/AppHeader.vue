@@ -36,6 +36,7 @@ export default {
 </template>
 
 <style lang="scss">
+@use '../styles/variables.scss' as *;
 
 header {
     width: 100%;
@@ -79,7 +80,7 @@ header {
                     font-size: 1em;
                     text-transform: uppercase;
 
-                    background-color: #DC1B28;
+                    background-color: $primary_color;
                     margin-right: 20px;
                 }
 
