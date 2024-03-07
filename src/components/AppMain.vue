@@ -23,7 +23,8 @@ export default {
 
 <template>
     
-    <main>
+    <main :class="{ 'd-none': store.movies.length === 0 && store.tvSeries.length === 0 }">
+
 
         <AppCardMovie></AppCardMovie>
 
@@ -42,6 +43,10 @@ main {
 
     padding-top: 30px;
     padding-bottom: 30px;
+
+    &.d-none{
+        display: none;
+    }
 
 }
 

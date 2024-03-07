@@ -9,7 +9,6 @@ export default {
             store,
         }
     },
-
 }
 
 </script>
@@ -28,7 +27,9 @@ export default {
 
                 <div class="original-title"><strong>Titolo originale:</strong> <span>{{ movie.original_title }}</span></div>
                 <div class="non-original-title"><strong>Titolo:</strong> <span>{{ movie.title }}</span></div>
-                <div class="original-language"><strong>Lingue originale:</strong> <span>{{ movie.original_language }}</span></div>
+                <div class="original-language">
+                    <img :src="`https://flagcdn.com/16x12/${movie.original_language}.png`" :alt="movie.original_language">
+                </div>
                 <div class="vote-avarage"><strong>Rating:</strong> <span>{{ movie.vote_average.toFixed(2) }}</span></div>
 
             </div>

@@ -28,7 +28,9 @@ export default {
 
                 <div class="original-title"><strong>Titolo originale:</strong> <span>{{ serieTv.original_name }}</span></div>
                 <div class="name-serie-tv"><strong>Titolo:</strong> <span>{{ serieTv.name }}</span></div>
-                <div class="original-language"><strong>Lingua originale:</strong> <span>{{ serieTv.original_language }}</span></div>
+                <div class="original-language">
+                    <img :src="`https://flagcdn.com/16x12/${serieTv.original_language}.png`" :alt="serieTv.original_language">
+                </div>
                 <div class="vote-avarage"><strong>Rating:</strong> <span>{{ serieTv.vote_average.toFixed(2) }}</span></div>
                 
             </div>
