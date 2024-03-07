@@ -41,7 +41,9 @@ export default {
 main {
     width: 100%;
 
-    padding-top: 30px;
+    // margine di 30px sommato alla dimensione del Header in position fixed
+    margin-top: calc(30px + 100px); 
+
     padding-bottom: 30px;
 
     &.d-none{

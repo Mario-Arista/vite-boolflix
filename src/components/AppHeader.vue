@@ -41,6 +41,9 @@ export default {
 header {
     width: 100%;
     background: black;
+    position: fixed;
+    top: 0px;
+    left: 0px;
 
     .container {
 

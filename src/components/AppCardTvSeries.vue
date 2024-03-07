@@ -10,6 +10,24 @@ export default {
         }
     },
 
+    methods: {
+        changeFlagUrlSerieTv(serieTv) {
+            
+            if (serieTv.original_language === "en") {
+
+                // Se la lingua originale è "en", restituisco l'URL della bandiera "gb"
+                return "https://flagcdn.com/20x15/gb.png";
+
+            } else if (serieTv.original_language === "ja") {
+                // Se la lingua originale è "ja", restituisco l'URL della bandiera "jp"
+                return "https://flagcdn.com/20x15/jp.png";
+                
+            } else {
+                return `https://flagcdn.com/20x15/${serieTv.original_language}.png`;
+            }
+        }
+    },
+
 }
 
 </script>
@@ -29,7 +47,7 @@ export default {
                 <div class="original-title"><strong>Titolo originale:</strong> <span>{{ serieTv.original_name }}</span></div>
                 <div class="name-serie-tv"><strong>Titolo:</strong> <span>{{ serieTv.name }}</span></div>
                 <div class="original-language">
-                    <img :src="`https://flagcdn.com/16x12/${serieTv.original_language}.png`" :alt="serieTv.original_language">
+                    <img :src="changeFlagUrlSerieTv(serieTv)" :alt="serieTv.original_language">
                 </div>
                 <div class="vote-avarage"><strong>Rating:</strong> <span>{{ serieTv.vote_average.toFixed(2) }}</span></div>
                 
