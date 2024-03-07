@@ -4,21 +4,11 @@ import {store} from '../store';
 
 export default {
     name: 'AppHeader',
-    userRequestInput: '',
 
     data() {
         return {
             store,
         }
-    },
-
-    methods: {
-
-        SearchingString() {
-            this.store.searchedText = this.userRequestInput.trim().split(' ').join('+');
-            console.log(this.store.searchedText);
-        }
-
     },
 
 }
@@ -31,8 +21,8 @@ export default {
             <div class="row">
                 <img src="/img/logo.png" alt="logo Boolflix">
                 <div id="filter-boolflix">
-                    <input name="filter" type="search" v-model="userRequestInput" placeholder="Cerca il tuo film">
-                    <button @click="() => { SearchingString(); $emit('creatingCards') }">Cerca</button>
+                    <input name="filter" type="search" v-model="store.searchedText" placeholder="Cerca il tuo film">
+                    <button @click="$emit('search')">Cerca</button>
                     <div class="img-cont">
                         <img src="/img/profile.jpeg" alt="immagine profilo">
                     </div>
@@ -71,7 +61,7 @@ header {
 
                 input {
                     width: 200px;
-
+                    
                     padding: 8px 12px;
                     border: none;
 

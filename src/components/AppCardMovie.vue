@@ -22,31 +22,15 @@ export default {
 
         <div id="all-movies">
 
-            <div class="movie">
-                Regista: Wes Anderson<br>
-                Film: Grand Hotel Budapest<br>
-                Genere: Capolavoro
-            </div>
+            <div class="movie"
+                v-for="movie in store.movies"
+            >
 
-            <div class="movie">
-                Regista: Wes Anderson<br>
-                Film: Grand Hotel Budapest<br>
-                Genere: Capolavoro
-            </div>
-            <div class="movie">
-                Regista: Wes Anderson<br>
-                Film: Grand Hotel Budapest<br>
-                Genere: Capolavoro
-            </div>
-            <div class="movie">
-                Regista: Wes Anderson<br>
-                Film: Grand Hotel Budapest<br>
-                Genere: Capolavoro
-            </div>
-            <div class="movie">
-                Regista: Wes Anderson<br>
-                Film: Grand Hotel Budapest<br>
-                Genere: Capolavoro
+                <div class="original-title">{{ movie.original_title }}</div>
+                <div class="non-original-title">{{ movie.title }}</div>
+                <div class="original-language">{{ movie.original_language }}</div>
+                <div class="vote-avarage">{{ movie.vote_average.toFixed(1) }}</div>
+
             </div>
 
         </div>
@@ -69,6 +53,7 @@ export default {
 
     .movie {
         display: flex;
+        flex-direction: column;
 
         background-color: transparent;
         width: calc(100% / 5 - $cardOrizontalGap / 5 * 4);

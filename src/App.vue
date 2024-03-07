@@ -21,15 +21,14 @@ export default {
 
   methods: {
     filterWithApi() {
-
-      axios.get('https://api.themoviedb.org/3/search/movie?api_key=d73dfba09f18e671d0c3d7d2b090ca8f&query=' + this.store.searchedText) 
+      axios.get(`https://api.themoviedb.org/3/search/movie?api_key=d73dfba09f18e671d0c3d7d2b090ca8f&query=` + this.store.searchedText.trim().split(' ').join('+'))
         .then(res => {
-          
           this.store.movies = res.data.results;
-      });
-
-    }
-
+        })
+        .catch(error => {
+          console.error('Error fetching movies:', error);
+        });
+    },
   },
 
 }
@@ -38,8 +37,9 @@ export default {
 <template>
 
 
-  <AppHeader></AppHeader>
-  <AppMain :creatingCards="filterWithApi()"></AppMain>
+  <AppHeader @search="filterWithApi"></AppHeader>
+
+  <AppMain></AppMain>
 
 
 </template>
