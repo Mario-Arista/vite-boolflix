@@ -64,15 +64,18 @@ export default {
         v-if="posterMovie"
     >
         <div class="poster-container">
-            <img :src="'https://image.tmdb.org/t/p/w342/' + posterMovie.poster_path" :alt="posterMovie.original_title">
+            <img v-if="posterMovie.poster_path != null" :src="'https://image.tmdb.org/t/p/w342/' + posterMovie.poster_path" :alt="posterMovie.original_title">
+            <div v-else class="replace-for-missing-poster">
+                <div>Poster not available</div>
+            </div>
         </div>
         <div class="hidden-info">
-            <div class="original-title"><strong>Titolo originale:</strong> <span>{{ posterMovie.original_title }}</span></div>
             <div class="original-language">
                 <img :src="changeFlagUrlMovie(posterMovie)" :alt="posterMovie.original_language">
             </div>
             <div class="vote-avarage"><strong>Rating:</strong> <span>{{ posterMovie.vote_average.toFixed(2) }}</span></div>
-            <div class="description"><strong>Descrizione:</strong> <span>{{ posterMovie.overview }}</span></div>
+            <div class="original-title"><strong>Title:</strong> <span>{{ posterMovie.original_title }}</span></div>
+            <div class="description"><strong>Description:</strong> <span>{{ posterMovie.overview }}</span></div>
         </div>
     </div>
 
@@ -81,15 +84,18 @@ export default {
         v-if="posterSerieTv"
     >
         <div class="poster-container">
-            <img :src="'https://image.tmdb.org/t/p/w342/' + posterSerieTv.poster_path" :alt="posterSerieTv.original_name">
+            <img v-if="posterSerieTv.poster_path != null" :src="'https://image.tmdb.org/t/p/w342/' + posterSerieTv.poster_path" :alt="posterSerieTv.name">
+            <div v-else class="replace-for-missing-poster">
+                <div>Poster not available</div>
+            </div>
         </div>
         <div class="hidden-info">
-            <div class="name-serie-tv"><strong>Titolo:</strong> <span>{{ posterSerieTv.name }}</span></div>
             <div class="original-language">
                 <img :src="changeFlagUrlSerieTv(posterSerieTv)" :alt="posterSerieTv.original_language">
             </div>
             <div class="vote-avarage"><strong>Rating:</strong> <span>{{ posterSerieTv.vote_average.toFixed(2) }}</span></div>
-            <div class="description"><strong>Descrizione:</strong> <span>{{ posterSerieTv.overview }}</span></div>
+            <div class="name-serie-tv"><strong>Title:</strong> <span>{{ posterSerieTv.name }}</span></div>
+            <div class="description"><strong>Description:</strong> <span>{{ posterSerieTv.overview }}</span></div>
         </div>
     </div>
 
@@ -101,8 +107,6 @@ export default {
 <style lang="scss">
 @use '../styles/variables.scss' as *;
 
-
-
 .card {
 
     width: calc(100% / 5 - $cardOrizontalGap / 5 * 4);
@@ -110,24 +114,21 @@ export default {
 
     overflow-y: auto;
 
-    background-color: transparent;
-
-    // Test
-    border: 1px dashed black;
 
     &:hover {
 
         .poster-container {
             display: none;
+
         }
 
         .hidden-info {
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
+            align-items: center;
             gap: 10px;
-            padding-left: 5px;
-            padding-top: 5px;
+            padding: 15px;
 
         }
 
@@ -138,6 +139,29 @@ export default {
         img {
             display: block;
             width: 100%;
+        }
+
+        .replace-for-missing-poster {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            width: 100%;
+            height: 325px;
+
+            background-color: $primary-color;
+
+            font-family: "Barlow Condensed";
+            font-size: 2em;
+            font-weight: bold;
+            text-transform: uppercase;
+
+            div {
+
+                text-align: center;                
+
+            }
+
         }
     }
 

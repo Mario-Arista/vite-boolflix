@@ -20,8 +20,8 @@ export default {
         <div class="row">
             <img src="/img/logo.png" alt="logo Boolflix">
             <div id="filter-boolflix">
-                <input name="filter" type="search" v-model="store.searchedText" placeholder="Cerca il tuo film">
-                <button @click="$emit('performSearch')">Cerca</button>
+                <input name="filter" type="search" v-model="store.searchedText" placeholder="Search your film or tv Series">
+                <button @click="$emit('performSearch')">Search</button>
                 <div class="img-cont">
                     <img src="/img/profile.jpeg" alt="immagine profilo">
                 </div>
