@@ -68,11 +68,11 @@ export default {
         </div>
         <div class="hidden-info">
             <div class="original-title"><strong>Titolo originale:</strong> <span>{{ posterMovie.original_title }}</span></div>
-            <div class="non-original-title"><strong>Titolo:</strong> <span>{{ posterMovie.title }}</span></div>
             <div class="original-language">
                 <img :src="changeFlagUrlMovie(posterMovie)" :alt="posterMovie.original_language">
             </div>
             <div class="vote-avarage"><strong>Rating:</strong> <span>{{ posterMovie.vote_average.toFixed(2) }}</span></div>
+            <div class="description"><strong>Descrizione:</strong> <span>{{ posterMovie.overview }}</span></div>
         </div>
     </div>
 
@@ -81,15 +81,15 @@ export default {
         v-if="posterSerieTv"
     >
         <div class="poster-container">
-            <img :src="'https://image.tmdb.org/t/p/w342/' + posterSerieTv.backdrop_path" :alt="posterSerieTv.original_name">
+            <img :src="'https://image.tmdb.org/t/p/w780/' + posterSerieTv.backdrop_path" :alt="posterSerieTv.original_name">
         </div>
         <div class="hidden-info">
-            <div class="original-title"><strong>Titolo originale:</strong> <span>{{ posterSerieTv.original_name }}</span></div>
             <div class="name-serie-tv"><strong>Titolo:</strong> <span>{{ posterSerieTv.name }}</span></div>
             <div class="original-language">
                 <img :src="changeFlagUrlSerieTv(posterSerieTv)" :alt="posterSerieTv.original_language">
             </div>
             <div class="vote-avarage"><strong>Rating:</strong> <span>{{ posterSerieTv.vote_average.toFixed(2) }}</span></div>
+            <div class="description"><strong>Descrizione:</strong> <span>{{ posterSerieTv.overview }}</span></div>
         </div>
     </div>
 
