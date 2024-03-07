@@ -81,7 +81,7 @@ export default {
         v-if="posterSerieTv"
     >
         <div class="poster-container">
-            <img :src="'https://image.tmdb.org/t/p/w780/' + posterSerieTv.backdrop_path" :alt="posterSerieTv.original_name">
+            <img :src="'https://image.tmdb.org/t/p/w342/' + posterSerieTv.poster_path" :alt="posterSerieTv.original_name">
         </div>
         <div class="hidden-info">
             <div class="name-serie-tv"><strong>Titolo:</strong> <span>{{ posterSerieTv.name }}</span></div>
@@ -106,6 +106,7 @@ export default {
 .card {
 
     width: calc(100% / 5 - $cardOrizontalGap / 5 * 4);
+    height: 325px;
 
     overflow-y: auto;
 
