@@ -23,7 +23,6 @@ export default {
 
     
     filterWithApi() {
-
       // metodo per riempire l'array movies nello store in base alla ricerca
 
       axios.get(`https://api.themoviedb.org/3/search/movie?api_key=d73dfba09f18e671d0c3d7d2b090ca8f&query=` + this.store.searchedText.trim().split(' ').join('+'))
@@ -51,8 +50,10 @@ export default {
 
 <template>
 
-
-  <AppHeader @search="filterWithApi"></AppHeader>
+  <header>
+    <AppHeader @performSearch="filterWithApi()"></AppHeader>
+  </header>
+  
 
   <AppMain></AppMain>
 
@@ -61,4 +62,14 @@ export default {
 
 <style lang="scss">
 
+header {
+  width: 100%;
+  height: 100px;
+  
+  background: black;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+
+}
 </style>

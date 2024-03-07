@@ -1,9 +1,7 @@
 <script>
 import {store} from '../store';
 
-import AppCardMovie from './AppCardMovie.vue';
-import AppCardTvSeries from './AppCardTvSeries.vue';
-
+import AppCard from './AppCard.vue';
 
 export default {
     name: 'AppMain',
@@ -15,8 +13,7 @@ export default {
     },
 
     components: {
-        AppCardMovie,
-        AppCardTvSeries,
+        AppCard,
     },  
 }
 </script>
@@ -25,10 +22,34 @@ export default {
     
     <main :class="{ 'd-none': store.movies.length === 0 && store.tvSeries.length === 0 }">
 
+        <div class="container">
 
-        <AppCardMovie></AppCardMovie>
+            <h2>FILM:</h2>
 
-        <AppCardTvSeries></AppCardTvSeries>
+            <div class="all-posters">
+
+                <AppCard v-for="movie in store.movies"
+                    :posterMovie="movie"
+                ></AppCard>
+
+            </div>
+
+        </div>
+
+        <div class="container">
+
+            <h2>SERIE TV:</h2>
+
+            <div class="all-posters">
+
+                <AppCard 
+                    v-for="serieTv in store.tvSeries"
+                    :posterSerieTv="serieTv"
+                ></AppCard>
+
+            </div>
+
+        </div>
         
     </main>
 
@@ -40,9 +61,15 @@ export default {
 
 main {
     width: 100%;
+    height: calc(100vh - 100px);
+    position: absolute;
+    top: 100px;
+    left: 0px;
+
+    overflow-y: auto;
 
     // margine di 30px sommato alla dimensione del Header in position fixed
-    margin-top: calc(30px + 100px); 
+    padding-top: 30px; 
 
     padding-bottom: 30px;
 
@@ -50,6 +77,13 @@ main {
         display: none;
     }
 
+    .all-posters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: $cardOrizontalGap;
+        margin-bottom: 30px;
+    }
 }
+
 
 </style>
