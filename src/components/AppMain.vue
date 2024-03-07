@@ -1,7 +1,9 @@
 <script>
 import {store} from '../store';
 
-import AppCard from './AppCard.vue';
+import AppCardMovie from './AppCardMovie.vue';
+import AppCardTvSeries from './AppCardTvSeries.vue';
+
 
 export default {
     name: 'AppMain',
@@ -13,17 +15,22 @@ export default {
     },
 
     components: {
-        AppCard,
+        AppCardMovie,
+        AppCardTvSeries,
     },  
 }
 </script>
 
 <template>
+    
     <main>
-        <div class="container">
-            <AppCard></AppCard>
-        </div>
+
+        <AppCardMovie></AppCardMovie>
+
+        <AppCardTvSeries></AppCardTvSeries>
+        
     </main>
+
 </template>
 
 <style lang="scss">
@@ -33,17 +40,8 @@ export default {
 main {
     width: 100%;
 
-    // Test
-    background: greenyellow;
-
-    .container {
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: $cardVerticalGap $cardOrizontalGap;
-
-        padding: 30px 0px;
-    }
+    padding-top: 30px;
+    padding-bottom: 30px;
 
 }
 
