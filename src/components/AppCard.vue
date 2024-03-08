@@ -61,8 +61,10 @@ export default {
                 <img :src="changeFlagUrl(posterMovie)" :alt="posterMovie.original_language">
             </div>
             <div class="vote-avarage">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-regular fa-star"></i>
+                <div v-for="star in 5" >
+                    <i v-if="star <= Math.round(posterMovie.vote_average / 2)" class="fa-solid fa-star"></i>
+                    <i v-else class="fa-regular fa-star"></i>
+                </div>
             </div>
             <div class="original-title"><strong>Title:</strong> <span>{{ posterMovie.original_title }}</span></div>
             <div class="description"><strong>Description:</strong> <span>{{ posterMovie.overview }}</span></div>
@@ -83,7 +85,12 @@ export default {
             <div class="original-language">
                 <img :src="changeFlagUrl(posterSerieTv)" :alt="posterSerieTv.original_language">
             </div>
-            <div class="vote-avarage"><strong>Rating:</strong> <span>{{ posterSerieTv.vote_average.toFixed(2) }}</span></div>
+            <div class="vote-avarage">
+                <div v-for="star in 5">
+                    <i v-if="star <= Math.round(posterSerieTv.vote_average / 2)" class="fa-solid fa-star"></i>
+                    <i v-else class="fa-regular fa-star"></i>
+                </div>
+            </div>
             <div class="name-serie-tv"><strong>Title:</strong> <span>{{ posterSerieTv.name }}</span></div>
             <div class="description"><strong>Description:</strong> <span>{{ posterSerieTv.overview }}</span></div>
         </div>
@@ -119,6 +126,17 @@ export default {
             align-items: center;
             gap: 10px;
             padding: 15px;
+
+            strong {
+
+                color: $primary_color;
+
+            }
+            .vote-avarage {
+                display: flex;
+                flex-direction: row;
+                gap: 1px;
+            }
 
         }
 
@@ -158,11 +176,10 @@ export default {
     .hidden-info {
 
         display: none;
+
     }
 
-    strong {
-        color: $primary_color;
-    }
+
 }
 
 
