@@ -34,7 +34,11 @@ export default {
                 <input name="filter" type="search" v-model="store.searchedText" placeholder="Search your film or tv Series">
                 <button @click="$emit('performSearch')">Search</button>
                 <div class="img-cont">
+                    <i class="fa-solid fa-bell">
+                        <div class="notif">1</div>
+                    </i>
                     <img src="/img/profile.jpeg" alt="immagine profilo">
+                    <i class="fa fa-angle-down"></i>
                 </div>
             </div>
         </div>
@@ -89,12 +93,13 @@ export default {
 
         #filter-boolflix {
             display: flex;
+            align-items: center;
             gap: 10px;
 
             input {
-                width: 200px;
+                max-width: 200px;
                     
-                padding: 8px 12px;
+                padding: 8px 10px;
                 border: none;
 
                 font-family: "Barlow Condensed";
@@ -116,11 +121,40 @@ export default {
             }
 
             .img-cont {
-                width: 50px;
-                height: 50px;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+
+                
+
+                .fa-bell {
+                    position: relative;
+                    padding-right: 10px;
+
+                    .notif {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        position: absolute;
+
+                        top: -5px;
+                        right: 5px;
+
+                        width: 12px;
+                        height: 12px;
+
+                        font-size: 8px;
+                        background-color: $primary-color;
+                        border-radius: 50%;
+                    }
+                    
+
+                }
 
                 img {
-                    width: 100%;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
                 }
             }
         }
