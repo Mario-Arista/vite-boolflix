@@ -19,37 +19,24 @@ export default {
 
     methods: {
 
-        changeFlagUrlMovie(posterMovie) {
+        // Metodo per bandiere sia per movie che per Serie TV
+        changeFlagUrl(poster) {
             
-            if (posterMovie.original_language === "en") {
+            if (poster.original_language === "en") {
 
                 // Se la lingua originale è "en", restituisco l'URL della bandiera "gb"
                 return "https://flagcdn.com/20x15/gb.png";
 
-            } else if (posterMovie.original_language === "ja") {
+            } else if (poster.original_language === "ja") {
+
                 // Se la lingua originale è "ja", restituisco l'URL della bandiera "jp"
                 return "https://flagcdn.com/20x15/jp.png";
                 
             } else {
-                return `https://flagcdn.com/20x15/${posterMovie.original_language}.png`;
+                return `https://flagcdn.com/20x15/${poster.original_language}.png`;
             }
         },
 
-        changeFlagUrlSerieTv(posterSerieTv) {
-            
-            if (posterSerieTv.original_language === "en") {
-
-                // Se la lingua originale è "en", restituisco l'URL della bandiera "gb"
-                return "https://flagcdn.com/20x15/gb.png";
-
-            } else if (posterSerieTv.original_language === "ja") {
-                // Se la lingua originale è "ja", restituisco l'URL della bandiera "jp"
-                return "https://flagcdn.com/20x15/jp.png";
-                
-            } else {
-                return `https://flagcdn.com/20x15/${posterSerieTv.original_language}.png`;
-            }
-        }
     }
 }
 
@@ -66,14 +53,17 @@ export default {
         <div class="poster-container">
             <img v-if="posterMovie.poster_path != null" :src="'https://image.tmdb.org/t/p/w342/' + posterMovie.poster_path" :alt="posterMovie.original_title">
             <div v-else class="replace-for-missing-poster">
-                <div>Poster not available</div>
+                <div>Movie's poster not available</div>
             </div>
         </div>
         <div class="hidden-info">
             <div class="original-language">
-                <img :src="changeFlagUrlMovie(posterMovie)" :alt="posterMovie.original_language">
+                <img :src="changeFlagUrl(posterMovie)" :alt="posterMovie.original_language">
             </div>
-            <div class="vote-avarage"><strong>Rating:</strong> <span>{{ posterMovie.vote_average.toFixed(2) }}</span></div>
+            <div class="vote-avarage">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-regular fa-star"></i>
+            </div>
             <div class="original-title"><strong>Title:</strong> <span>{{ posterMovie.original_title }}</span></div>
             <div class="description"><strong>Description:</strong> <span>{{ posterMovie.overview }}</span></div>
         </div>
@@ -86,12 +76,12 @@ export default {
         <div class="poster-container">
             <img v-if="posterSerieTv.poster_path != null" :src="'https://image.tmdb.org/t/p/w342/' + posterSerieTv.poster_path" :alt="posterSerieTv.name">
             <div v-else class="replace-for-missing-poster">
-                <div>Poster not available</div>
+                <div>SerieTv's poster not available</div>
             </div>
         </div>
         <div class="hidden-info">
             <div class="original-language">
-                <img :src="changeFlagUrlSerieTv(posterSerieTv)" :alt="posterSerieTv.original_language">
+                <img :src="changeFlagUrl(posterSerieTv)" :alt="posterSerieTv.original_language">
             </div>
             <div class="vote-avarage"><strong>Rating:</strong> <span>{{ posterSerieTv.vote_average.toFixed(2) }}</span></div>
             <div class="name-serie-tv"><strong>Title:</strong> <span>{{ posterSerieTv.name }}</span></div>
@@ -110,7 +100,7 @@ export default {
 .card {
 
     width: calc(100% / 5 - $cardOrizontalGap / 5 * 4);
-    height: 325px;
+    height: 360px;
 
     overflow-y: auto;
 
@@ -147,7 +137,7 @@ export default {
             align-items: center;
 
             width: 100%;
-            height: 325px;
+            height: 360px;
 
             background-color: $primary-color;
 

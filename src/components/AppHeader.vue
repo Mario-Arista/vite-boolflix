@@ -18,7 +18,18 @@ export default {
 
     <div class="container">
         <div class="row">
-            <img src="/img/logo.png" alt="logo Boolflix">
+            <div id="logo-nav">
+                <img src="/img/logo.png" alt="logo Boolflix">
+                <ul>
+                    <li>Home</li>
+                    <li>Tv series</li>
+                    <li>Movies</li>
+                    <li>Originals</li>
+                    <li>New arrivals</li>
+                    <li>My list</li>
+                </ul>
+            </div>
+
             <div id="filter-boolflix">
                 <input name="filter" type="search" v-model="store.searchedText" placeholder="Search your film or tv Series">
                 <button @click="$emit('performSearch')">Search</button>
@@ -47,9 +58,34 @@ export default {
         justify-content: space-between;
         align-items: center;
 
-        img {
-            width: 180px;
+        #logo-nav {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 5px;
+
+            img {
+                width: 180px;
+            }
+            ul {
+                display: flex;
+                gap: 5px;
+                list-style-type: none;
+                color: #121212;
+                
+
+                li {
+                    
+                    filter: brightness(3.5);
+
+                    &:hover {
+                        filter: brightness(7.5);
+                    }
+                }
+                
+            }
         }
+        
 
         #filter-boolflix {
             display: flex;
