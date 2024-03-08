@@ -62,14 +62,81 @@ export default {
 
 <style lang="scss">
 
+@use './styles/variables.scss' as *;
+
 header {
   width: 100%;
   height: 100px;
   
-  background: black;
+  background-color: black;
   position: fixed;
   top: 0px;
   left: 0px;
 
 }
+
+@media screen and (max-width: 1200px) {
+
+  .card {
+
+    width: calc(100% / 4 - $cardOrizontalGap / 4 * 3);
+    height: 380px;
+
+    .poster-container img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      object-position: bottom;
+    }
+  }
+
+}
+
+@media screen and (max-width: 992px) {
+
+  header {
+    height: 75px;
+  }
+
+  main {
+    top: 75px;
+    height: calc(100vh - 75px);
+
+  }
+
+  .card {
+    width: calc(100% / 3 - $cardOrizontalGap / 3 * 2);
+    height: 430px;
+  
+  }
+
+  .container .row #logo-nav img {
+    width: 80px;
+  } 
+
+  .container .row #logo-nav ul,
+  .container .row #filter-boolflix .img-cont {
+    display: none;
+  }
+
+}
+
+@media screen and (max-width: 740px) {
+  .card {
+
+    width: calc(100% / 2 - $cardOrizontalGap / 2 * 1);
+    height: 725px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .card {
+
+    width: 100%;
+    height: 650px;
+  }
+
+}
+
+
 </style>

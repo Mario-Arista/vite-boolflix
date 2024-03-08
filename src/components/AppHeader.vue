@@ -8,7 +8,9 @@ export default {
     data() {
         return {
             store,
+
         }
+
     },
 
 }
@@ -54,8 +56,6 @@ export default {
 
 
 .container {
-
-    padding: 20px 0px;
 
     .row {
         display: flex;

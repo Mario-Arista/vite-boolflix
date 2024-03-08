@@ -67,12 +67,7 @@ main {
     left: 0px;
 
     overflow-y: auto;
-
-    // margine di 30px sommato alla dimensione del Header in position fixed
-    padding-top: 30px; 
-
-    padding-bottom: 30px;
-
+    
     &.d-none{
         display: none;
     }

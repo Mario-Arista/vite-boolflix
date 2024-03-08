@@ -12,7 +12,11 @@ export default {
     
     data() {
         return {
+
             store,
+
+            // Booleana per mostrare elementi nella card el click 
+            showHiddenInfo: false,
         };
         
     },
@@ -37,6 +41,13 @@ export default {
             }
         },
 
+        // Funzioni lanciate al click sulla card
+        clickOnCard() {
+
+            // mostra e nascondi elementi HTML
+            this.showHiddenInfo = !this.showHiddenInfo;
+        }
+
     }
 }
 
@@ -45,18 +56,29 @@ export default {
 <template>
 
 
-
+    <!-- MOVIE CARD -->
     <div 
         class="card"
         v-if="posterMovie"
+        @click="clickOnCard"
     >
-        <div class="poster-container">
+        <!-- container con img poster  e rimpiazzo se null--> 
+        <div 
+            class="poster-container"
+            v-show="!showHiddenInfo"
+
+        >
             <img v-if="posterMovie.poster_path != null" :src="'https://image.tmdb.org/t/p/w342/' + posterMovie.poster_path" :alt="posterMovie.original_title">
             <div v-else class="replace-for-missing-poster">
                 <div>Movie's poster not available</div>
             </div>
         </div>
-        <div class="hidden-info">
+
+        <!-- Informazioni Nascoste -->
+        <div 
+            class="hidden-info"
+            v-show="showHiddenInfo"
+        >
             <div class="original-language">
                 <img :src="changeFlagUrl(posterMovie)" :alt="posterMovie.original_language">
             </div>
@@ -71,17 +93,27 @@ export default {
         </div>
     </div>
 
+        <!-- SERIE-TV CARD -->
+
     <div 
         class="card"
         v-if="posterSerieTv"
+        @click="clickOnCard"
     >
-        <div class="poster-container">
+        <div 
+            class="poster-container"
+            v-show="!showHiddenInfo"
+        >
             <img v-if="posterSerieTv.poster_path != null" :src="'https://image.tmdb.org/t/p/w342/' + posterSerieTv.poster_path" :alt="posterSerieTv.name">
             <div v-else class="replace-for-missing-poster">
                 <div>SerieTv's poster not available</div>
             </div>
         </div>
-        <div class="hidden-info">
+
+        <div 
+            class="hidden-info"
+            v-show="showHiddenInfo"
+        >
             <div class="original-language">
                 <img :src="changeFlagUrl(posterSerieTv)" :alt="posterSerieTv.original_language">
             </div>
@@ -109,44 +141,19 @@ export default {
     width: calc(100% / 5 - $cardOrizontalGap / 5 * 4);
     height: 360px;
 
-    overflow-y: auto;
-
-
-    &:hover {
-
-        .poster-container {
-            display: none;
-
-        }
-
-        .hidden-info {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 10px;
-            padding: 15px;
-
-            strong {
-
-                color: $primary_color;
-
-            }
-            .vote-avarage {
-                display: flex;
-                flex-direction: row;
-                gap: 1px;
-            }
-
-        }
-
-    }
 
     .poster-container {
 
+        height: 100%;
+
+        &:hover {
+            filter: grayscale(1.3);
+        }
+
         img {
             display: block;
-            width: 100%;
+            height: 100%;
+
         }
 
         .replace-for-missing-poster {
@@ -154,8 +161,7 @@ export default {
             justify-content: center;
             align-items: center;
 
-            width: 100%;
-            height: 360px;
+            height: 100%;
 
             background-color: $primary-color;
 
@@ -174,8 +180,30 @@ export default {
     }
 
     .hidden-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+        padding: 15px;
 
-        display: none;
+        height: 100%;
+
+        overflow-y: auto;
+
+        background: linear-gradient(to top, $primary-color, black,);
+
+        strong {
+
+            color: $primary_color;
+
+        }
+
+        .vote-avarage {
+            display: flex;
+            flex-direction: row;
+            gap: 1px;
+        }
 
     }
 
