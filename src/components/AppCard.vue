@@ -1,7 +1,9 @@
 <script>
+import axios from 'axios'; 
 import {store} from '../store';
 
 export default {
+
     name: 'AppCard',
 
     props: {
@@ -41,13 +43,78 @@ export default {
             }
         },
 
-        // Funzioni lanciate al click sulla card
-        clickOnCard() {
+        // Funzione lanciate al click sulla card Movie
+        clickOnMovie(movieId) {
 
-            // mostra e nascondi elementi HTML
+            // Mostra le informazioni aggiuntive
             this.showHiddenInfo = !this.showHiddenInfo;
-        }
 
+            // Se è un film, effettua la chiamata API per ottenere il cast del film
+            axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=d73dfba09f18e671d0c3d7d2b090ca8f`)
+                .then(result => {
+
+                    // Prendo l'id 
+                    const castID = result.data.id;
+
+                    // Prendo i primi 5 attori
+                    const top5Actors = result.data.cast.slice(0, 5);
+
+                    // Estraggo solo i nomi degli attori
+                    const actorNames = top5Actors.map(actor => actor.name);
+
+                    // Creo un oggetto con l'ID del film e i primi 5 attori
+                    const movieData = {
+                        id: castID,
+                        cast: actorNames
+                    };
+
+                    if (!this.store.castMovie.some(data => data.id === movieId)) {
+                        // Aggiungo i primi 5 attori del film allo store con l'ID del film
+                        this.store.castMovie.push(movieData);
+                    }
+
+
+                })
+                .catch(error => {
+                    console.error('Errore nel recupero del cast del film:', error);
+            });
+            
+        },
+
+        // Funzione lanciata al click sulla card Serie TV
+        clickOnSerieTv(SerieId) {
+
+            // Mostra le informazioni aggiuntive
+            this.showHiddenInfo = !this.showHiddenInfo;
+            
+            // Se è una serie TV, effettua la chiamata API per ottenere i crediti della serie TV
+            axios.get(`https://api.themoviedb.org/3/tv/${SerieId}/credits?api_key=d73dfba09f18e671d0c3d7d2b090ca8f`)
+                .then(res => {
+                    // Prendo l'id 
+                    const castIDSerie = res.data.id;
+
+                    // Prendo i primi 5 attori
+                    const top5ActorsSerie = res.data.cast.slice(0, 5);
+
+                    // Estraggo solo i nomi degli attori
+                    const actorNamesSerie = top5ActorsSerie.map(actor => actor.name);
+
+                    // Creo un oggetto con l'ID del film e i primi 5 attori
+                    const serieData = {
+                        id: castIDSerie,
+                        cast: actorNamesSerie
+                    };
+
+                    if (!this.store.castSerieTv.some(data => data.id === serieId))  {
+                        // Aggiungo i primi 5 attori del film allo store con l'ID del film
+                        this.store.castSerieTv.push(serieData);
+                    }
+                    
+                })
+                .catch(error => {
+                    console.error('Errore nel recupero del cast della serie TV:', error);
+            });
+        }
     }
 }
 
@@ -60,7 +127,7 @@ export default {
     <div 
         class="card"
         v-if="posterMovie"
-        @click="clickOnCard"
+        @click="clickOnMovie(posterMovie.id)"
     >
         <!-- container con img poster  e rimpiazzo se null--> 
         <div 
@@ -79,27 +146,57 @@ export default {
             class="hidden-info"
             v-show="showHiddenInfo"
         >
+            <!-- Bandierina -->
             <div class="original-language">
                 <img :src="changeFlagUrl(posterMovie)" :alt="posterMovie.original_language">
             </div>
+
+            <!-- Stelline con voto -->
             <div class="vote-avarage">
                 <div v-for="star in 5" >
                     <i v-if="star <= Math.round(posterMovie.vote_average / 2)" class="fa-solid fa-star"></i>
                     <i v-else class="fa-regular fa-star"></i>
                 </div>
             </div>
+
+            <!-- Generi dei film -->
+            <div class="genres">
+                <div class="genre" v-for="genre in store.genreMovies">
+                    <span v-if="posterMovie.genre_ids.includes(genre.id)"> 
+                        {{ genre.name + " " }} 
+                    </span>
+                </div>
+            </div>
+
+            <!-- titolo -->
             <div class="original-title"><strong>Title:</strong> <span>{{ posterMovie.original_title }}</span></div>
-            <div class="description"><strong>Description:</strong> <span>{{ posterMovie.overview }}</span></div>
+
+            <!-- descrizione -->
+            <div class="description">
+                <strong>Description:</strong> <span>{{ posterMovie.overview }}</span>
+            </div>
+
+            <!-- Cast -->
+            <div v-if="store.castMovie.length > 0">
+                <div v-for="movieData in store.castMovie">
+                    <div v-if="movieData.id === posterMovie.id" class="cast">
+                        <strong style="color: black">5 Main Actors: </strong>
+                        <span v-for="actor in movieData.cast">{{ actor + " " }}</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
-        <!-- SERIE-TV CARD -->
+    <!-- SERIE-TV CARD -->
 
     <div 
         class="card"
         v-if="posterSerieTv"
-        @click="clickOnCard"
+        @click="clickOnSerieTv(posterSerieTv.id)"
     >
+        <!-- container con img poster  e rimpiazzo se null--> 
         <div 
             class="poster-container"
             v-show="!showHiddenInfo"
@@ -110,21 +207,50 @@ export default {
             </div>
         </div>
 
+        <!-- Informazioni Nascoste -->
         <div 
             class="hidden-info"
             v-show="showHiddenInfo"
         >
+            <!-- Bandierina -->
             <div class="original-language">
                 <img :src="changeFlagUrl(posterSerieTv)" :alt="posterSerieTv.original_language">
             </div>
+
+            <!-- stelline con voto -->
             <div class="vote-avarage">
                 <div v-for="star in 5">
                     <i v-if="star <= Math.round(posterSerieTv.vote_average / 2)" class="fa-solid fa-star"></i>
                     <i v-else class="fa-regular fa-star"></i>
                 </div>
             </div>
+
+            <!-- generi serie TV -->
+            <div class="genres">
+                <div class="genre" v-for="genre in store.genreTvSeries">
+                    <span v-if="posterSerieTv.genre_ids.includes(genre.id)"> 
+                        {{ genre.name + " " }} 
+                    </span>
+                </div>
+            </div>
+
+            <!-- Titolo -->
             <div class="name-serie-tv"><strong>Title:</strong> <span>{{ posterSerieTv.name }}</span></div>
-            <div class="description"><strong>Description:</strong> <span>{{ posterSerieTv.overview }}</span></div>
+
+            <!-- Descrizione -->
+            <div class="description">
+                <strong>Description:</strong> <span>{{ posterSerieTv.overview }}</span>
+            </div>
+
+            <!-- Cast -->
+            <div v-if="store.castSerieTv.length > 0">
+                <div v-for="serieData in store.castSerieTv">
+                    <div v-if="serieData.id === posterSerieTv.id" class="cast">
+                        <strong style="color: black">5 Main Actors: </strong>
+                        <span v-for="actor in serieData.cast">{{ actor + " " }}</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -199,6 +325,22 @@ export default {
 
         }
 
+        .genres .genre {
+            
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            span {
+                font-size: 0.8em;
+                margin-bottom: 2px;
+                padding: 2px 4px;
+                border-radius: 8px;
+                color: $primary-color;
+                background-color: black;
+            }
+            
+        }
         .vote-avarage {
             display: flex;
             flex-direction: row;

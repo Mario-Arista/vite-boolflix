@@ -9,12 +9,14 @@ export default {
     data() {
         return  {
             store,
+
         }
     },
 
     components: {
         AppCard,
-    },  
+    },
+
 }
 </script>
 
