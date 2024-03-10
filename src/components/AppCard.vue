@@ -1,5 +1,5 @@
 <script>
-import axios from 'axios'; 
+import axios from 'axios';
 import {store} from '../store';
 
 export default {
@@ -45,40 +45,34 @@ export default {
 
         // Funzione lanciate al click sulla card Movie
         clickOnMovie(movieId) {
-
             // Mostra le informazioni aggiuntive
             this.showHiddenInfo = !this.showHiddenInfo;
 
-            // Se è un film, effettua la chiamata API per ottenere il cast del film
-            axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=d73dfba09f18e671d0c3d7d2b090ca8f`)
-                .then(result => {
+            // Verifica se l'ID del film è già presente nello store
+            if (!this.store.castMovie.some(movie => movie.id === movieId)) {
+                // Se il film non è presente nello store, effettua la chiamata API per ottenere il cast del film
+                axios.get(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=d73dfba09f18e671d0c3d7d2b090ca8f`)
+                    .then(result => {
+                        // Prendo i primi 5 attori
+                        const top5Actors = result.data.cast.slice(0, 5);
 
-                    // Prendo l'id 
-                    const castID = result.data.id;
+                        // Estraggo solo i nomi degli attori
+                        const actorNames = top5Actors.map(actor => actor.name);
 
-                    // Prendo i primi 5 attori
-                    const top5Actors = result.data.cast.slice(0, 5);
+                        // Creo un oggetto con l'ID del film e i primi 5 attori
+                        const movieData = {
+                            id: movieId,
+                            cast: actorNames
+                        };
 
-                    // Estraggo solo i nomi degli attori
-                    const actorNames = top5Actors.map(actor => actor.name);
-
-                    // Creo un oggetto con l'ID del film e i primi 5 attori
-                    const movieData = {
-                        id: castID,
-                        cast: actorNames
-                    };
-
-                    if (!this.store.castMovie.some(data => data.id === movieId)) {
-                        // Aggiungo i primi 5 attori del film allo store con l'ID del film
+                        // Aggiungo i dati del film allo store
                         this.store.castMovie.push(movieData);
-                    }
 
-
-                })
-                .catch(error => {
-                    console.error('Errore nel recupero del cast del film:', error);
-            });
-            
+                    })
+                    .catch(error => {
+                        console.error('Errore nel recupero del cast del film:', error);
+                    });
+            }
         },
 
         // Funzione lanciata al click sulla card Serie TV
@@ -86,7 +80,7 @@ export default {
 
             // Mostra le informazioni aggiuntive
             this.showHiddenInfo = !this.showHiddenInfo;
-            
+
             // Se è una serie TV, effettua la chiamata API per ottenere i crediti della serie TV
             axios.get(`https://api.themoviedb.org/3/tv/${SerieId}/credits?api_key=d73dfba09f18e671d0c3d7d2b090ca8f`)
                 .then(res => {
@@ -172,19 +166,18 @@ export default {
             <div class="original-title"><strong>Title:</strong> <span>{{ posterMovie.original_title }}</span></div>
 
             <!-- descrizione -->
-            <div class="description">
+            <div class="description" v-if="!posterMovie.overview == ''">
                 <strong>Description:</strong> <span>{{ posterMovie.overview }}</span>
             </div>
 
             <!-- Cast -->
             <div v-if="store.castMovie.length > 0">
-                <div v-for="movieData in store.castMovie">
-                    <div v-if="movieData.id === posterMovie.id" class="cast">
-                        <strong style="color: black">5 Main Actors: </strong>
-                        <span v-for="actor in movieData.cast">{{ actor + " " }}</span>
-                    </div>
+            <div v-for="movieData in store.castMovie">
+                <div v-if="movieData.id === posterMovie.id" class="cast">
+                    <span v-for="actor in movieData.cast" style="color: black;">{{ "Cast: " + actor + " " }}</span>
                 </div>
             </div>
+        </div>
 
         </div>
     </div>
@@ -225,7 +218,7 @@ export default {
                 </div>
             </div>
 
-            <!-- generi serie TV -->
+            <!-- generi serie TV  -->
             <div class="genres">
                 <div class="genre" v-for="genre in store.genreTvSeries">
                     <span v-if="posterSerieTv.genre_ids.includes(genre.id)"> 
@@ -238,7 +231,7 @@ export default {
             <div class="name-serie-tv"><strong>Title:</strong> <span>{{ posterSerieTv.name }}</span></div>
 
             <!-- Descrizione -->
-            <div class="description">
+            <div class="description" v-if="!posterSerieTv.overview == ''">
                 <strong>Description:</strong> <span>{{ posterSerieTv.overview }}</span>
             </div>
 
@@ -246,8 +239,7 @@ export default {
             <div v-if="store.castSerieTv.length > 0">
                 <div v-for="serieData in store.castSerieTv">
                     <div v-if="serieData.id === posterSerieTv.id" class="cast">
-                        <strong style="color: black">5 Main Actors: </strong>
-                        <span v-for="actor in serieData.cast">{{ actor + " " }}</span>
+                        <span v-for="actor in serieData.cast" style="color: black;">{{ "Main Actors: " + actor + " " }}</span>
                     </div>
                 </div>
             </div>
